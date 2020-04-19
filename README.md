@@ -1,2 +1,2 @@
-# stripe-react-lambda-go
-React JS Stripe Payment with Lambda Go
+# Stripe React Golang
+React JS Stripe Payment with Golang
