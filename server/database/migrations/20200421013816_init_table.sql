@@ -36,8 +36,9 @@ CREATE TABLE IF NOT EXISTS `user_addresses` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_profile_id` bigint(20) NOT NULL,
   `address` text NULL,
-  `state_code` varchar(255) NULL,
+  `postal_code` varchar(255) NULL,
   `city_code` varchar(255) NULL,
+  `state_code` varchar(255) NULL,
   `country_code` varchar(255) NULL,
   `created_by` bigint(20) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `code` varchar(255) NOT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
-  `logo` varchar(255) NULL,
+  `image` varchar(255) NULL,
   `details` text NULL,
   `created_by` bigint(20) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -67,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `transaction_id` bigint(20) NOT NULL,
   `product_code` varchar(255) NOT NULL,
   `qty` decimal(32, 2) NOT NULL DEFAULT 0,
   `price` decimal(32, 2) NOT NULL DEFAULT 0,
@@ -78,13 +80,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `idx_product_code` (`product_code`)
+  INDEX `idx_transaction_id_product_code` (`transaction_id`, `product_code`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `invoice` varchar(255) NOT NULL,
   `user_id` bigint(20) NOT NULL,
+  `invoice` varchar(255) NOT NULL,
   `currency` varchar(10) NOT NULL DEFAULT 'USD',
   `total` decimal(32, 2) NOT NULL DEFAULT 0,
   `admin_fee` decimal(32, 2) NOT NULL DEFAULT 0,
