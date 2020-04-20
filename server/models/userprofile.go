@@ -15,3 +15,19 @@ type UserProfile struct {
 	Avatar    *string    `json:"avatar" gorm:"column:avatar" validate:"-"`
 	Bio       *string    `json:"bio" gorm:"column:bio" validate:"-"`
 }
+
+type UserProfileRequest struct {
+	UserID   *int64  `json:"user_id" gorm:"column:user_id" validate:"required"`
+	Fullname *string `json:"fullname" gorm:"column:fullname" validate:"-"`
+	Gender   *string `json:"gender" gorm:"golumn:gender" validate:"-"`
+	Avatar   *string `json:"avatar" gorm:"column:avatar" validate:"-"`
+	Bio      *string `json:"bio" gorm:"column:bio" validate:"-"`
+}
+
+type UserProfileResponse struct {
+	UserID   *int64  `json:"user_id" gorm:"column:user_id" validate:"required"`
+	Fullname *string `json:"fullname" gorm:"column:fullname" validate:"-"`
+	Gender   *string `json:"gender" gorm:"golumn:gender" validate:"-"`
+	Avatar   *string `json:"avatar" gorm:"column:avatar" validate:"-"`
+	Bio      *string `json:"bio" gorm:"column:bio" validate:"-"`
+}

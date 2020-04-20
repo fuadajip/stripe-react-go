@@ -1,11 +1,17 @@
 package user
 
-import "github.com/labstack/echo"
+import (
+	"github.com/fuadajip/stripe-react-go/server/models"
+	"github.com/jinzhu/gorm"
+	"github.com/labstack/echo"
+)
 
 type Usecase interface {
-	UserRegistration(c echo.Context, payload *models.UserRegistrationRequest) (*models.UserRegistrationResp, error)
+	UserRegistration(c echo.Context, payload *models.UserRegistrationRequest) (*models.UserRegistrationResponse, error)
 }
 
 type Repository interface {
-	UserRegistration(c echo.Context, payload *models.UserRegistrationRequest) (*models.UserRegistrationResp, error)
+	FindUserByUsername(c echo.Context, payload *models.User) (*models.User, error)
+	FindUserByEmailPhone(c echo.Context, payload *models.User) (*models.User, error)
+	TrxUserRegistration(trx *gorm.DB, payload *models.User) (*models.User, error)
 }

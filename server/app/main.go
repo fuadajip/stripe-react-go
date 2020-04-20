@@ -17,6 +17,13 @@ import (
 	healthzHandler "github.com/fuadajip/stripe-react-go/server/domain/healthz/delivery/http"
 	healthzRepository "github.com/fuadajip/stripe-react-go/server/domain/healthz/repository"
 	healthzUsecase "github.com/fuadajip/stripe-react-go/server/domain/healthz/usecase"
+
+	userHandler "github.com/fuadajip/stripe-react-go/server/domain/user/delivery/http"
+	userRepository "github.com/fuadajip/stripe-react-go/server/domain/user/repository"
+	userUsecase "github.com/fuadajip/stripe-react-go/server/domain/user/usecase"
+
+	userprofileRepository "github.com/fuadajip/stripe-react-go/server/domain/userprofile/repository"
+	userprofileUsecase "github.com/fuadajip/stripe-react-go/server/domain/userprofile/usecase"
 )
 
 var (
@@ -75,11 +82,16 @@ func main() {
 	})
 
 	healthzRepo := healthzRepository.NewHealthCheckRepository(redisSess, mysqlSess)
+	userRepo := userRepository.NewUserRepository(mysqlSess)
+	userprofileRepo := userprofileRepository.NewUserProfileRepository(mysqlSess)
 
 	healthzUcase := healthzUsecase.NewHealthCheckUsecase(healthzRepo)
+	userUcase := userUsecase.NewUserUsecase(userRepo, userprofileRepo)
+	_ = userprofileUsecase.NewUserProfileUsecase(userprofileRepo)
 
 	// delivery handler implementation
 	healthzHandler.AddHealthCheckHandler(e, healthzUcase)
+	userHandler.AddUserHandler(e, userUcase)
 
 	e.Logger.Info(e.Start(fmt.Sprintf(":%d", conf.GetPort())))
 }
