@@ -26,6 +26,7 @@ type (
 		GetDatabasePassword() string
 		GetRedisHost() string
 		GetRedisPassword() string
+		GetSecret() string
 		GetStripeSecret() string
 	}
 
@@ -39,6 +40,7 @@ type (
 		DatabasePassword string `mapstructure:"DATABASE_PASS"`
 		RedisHost        string `mapstructure:"REDIS_HOST"`
 		RedisPassword    string `mapstructure:"REDIS_PASS"`
+		Secret           string `mapstructure:"SECRET"`
 		StripeSecret     string `mapstructure:"STRIPE_SECRET"`
 	}
 )
@@ -73,6 +75,10 @@ func (i *im) GetRedisHost() string {
 
 func (i *im) GetRedisPassword() string {
 	return i.RedisPassword
+}
+
+func (i *im) GetSecret() string {
+	return i.Secret
 }
 
 func (i *im) GetStripeSecret() string {

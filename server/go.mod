@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-sdk-go v1.30.10
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fgrosse/goldi v1.0.1
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-redis/redis v6.15.7+incompatible

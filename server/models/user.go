@@ -31,3 +31,13 @@ type UserRegistrationResponse struct {
 	Email    *string `json:"email"`
 	Phone    *string `json:"phone"`
 }
+
+type UserLoginRequest struct {
+	Email    *string `json:"email" validate:"required"`
+	Password *string `json:"password" validate:"required"`
+}
+
+type UserLoginResponse struct {
+	Email *string `json:"email"`
+	Token *string `json:"token"`
+}

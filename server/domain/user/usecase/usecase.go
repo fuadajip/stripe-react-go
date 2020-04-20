@@ -98,3 +98,37 @@ func (u usecase) UserRegistration(c echo.Context, payload *models.UserRegistrati
 
 	return mappedResp, nil
 }
+
+func (u usecase) UserLogin(c echo.Context, payload *models.UserLoginRequest) (*models.UserLoginResponse, error) {
+	userPayload := &models.User{
+		Email: payload.Email,
+	}
+	emailPhoneResp, err := u.repository.FindUserByEmailPhone(c, userPayload)
+	if err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return nil, Error.New("USER_NOTFOUND")
+		}
+		return nil, err
+	}
+
+	isValidPass := util.CompareHashPassword(payload.Password, emailPhoneResp.Password)
+	if !isValidPass {
+		return nil, Error.New("INVALID_CREDENTIALS")
+	}
+
+	claimJWT := &models.ClaimUserLoginJWT{
+		Email: emailPhoneResp.Email,
+	}
+
+	token, err := util.CreateUserJWT(c, claimJWT)
+	if err != nil {
+		return nil, err
+	}
+
+	mappedResp := &models.UserLoginResponse{
+		Email: emailPhoneResp.Email,
+		Token: token,
+	}
+
+	return mappedResp, nil
+}

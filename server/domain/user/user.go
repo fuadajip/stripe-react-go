@@ -8,6 +8,7 @@ import (
 
 type Usecase interface {
 	UserRegistration(c echo.Context, payload *models.UserRegistrationRequest) (*models.UserRegistrationResponse, error)
+	UserLogin(c echo.Context, payload *models.UserLoginRequest) (*models.UserLoginResponse, error)
 }
 
 type Repository interface {
