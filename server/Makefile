@@ -16,11 +16,11 @@ stop:
 
 # run goose local up
 goose-local-up:
-	goose mysql "root:root@/experipemt_grocery?parseTime=true" up
+	goose mysql "root:root@/experiment_grocery?parseTime=true" up
 
 # run goose local down
 goose-local-down:
-	goose mysql "root:root@/experipemt_grocery?parseTime=true" down
+	goose mysql "root:root@/experiment_grocery?parseTime=true" down
 
 # build docker image
 docker:
